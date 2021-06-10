@@ -29,10 +29,8 @@ mount_course() {
 				echo "$SELECTED_COURSE is already mounted";
 			else 
 				mkdir -p /home/trainee/$COURSE_NAME ;
-				bindfs -p 0555 -u trainee -g ftpaccess "/courses/$SELECTED_COURSE" "/home/trainee/$COURSE_NAME" ;
+				bindfs -p 0555 -u trainee -g ftpaccess "/data/courses/$SELECTED_COURSE" "/home/trainee/$COURSE_NAME" ;
 				echo "$SELECTED_COURSE is mounted";
-				#chown -R trainee:ftpaccess /home/trainee/$SELECTED_COURSE ;
-				#echo "Not mounted already";
 			fi
 			break;
 		fi
@@ -83,11 +81,9 @@ unmount_course() {
 	if [ $IS_FOUND == false ]; then echo "Entered wrong course"; fi;
 }
 
-# sudo findmnt --target /home/trainee/Linux_course/Linux_course1 | awk '{print $3}'| sed 1d
 IS_MOUNTED=false
 check_mount() {    
 	# Return 0 if mount exists 1 if not exists
-	#VAR="$(findmnt --target "/home/trainee/$1")";
 	VAR="$(sudo findmnt --target "/home/trainee/$1" | awk '{print $3}'| sed 1d)";
 	#if [ $? == 0 ]
 	if [ "$VAR" == "fuse" ]
@@ -108,17 +104,6 @@ unmount_all() {
     done
 }
 
-# "Linux_course/Linux_course1" "Linux_course/Linux_course2" "SQLFundamentals1"
-
-#mount_all;
-#unmount_all;
-#unmount_course "SQLFundamentals1";
-#unmount_course "Linux_course/Linux_course1";
-#unmount_course "Linux_course/Linux_course2";
-
-#mount_course "SQLFundamentals1";
-#check_mount "Linux_course2";
-#echo $IS_MOUNTED
 
 #if [ -z $1 ] ; then echo "Provide some option";
 #elif [ $1 == '-h' ] ; then usage ;
