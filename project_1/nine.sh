@@ -1,4 +1,4 @@
 #!/bin/bash
 
-df | awk '{print $1 "              " $6}'
+mount | column -t | awk '{print $1,$2,$3,$4,$5}'
 

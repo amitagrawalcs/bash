@@ -5,19 +5,17 @@ COUNT=0
 for i in $(cat file.txt)
 do
 	COUNT=$(( COUNT+1 ))
-	#hash ${i} 2>/dev/null;
 	COMMAND="$(command -v ${i})"
 	STATUS=$?
 	CORRECT=0
-	#if [ $CORRECT == $STATUS ]
-	if [ $COMMAND ] # if COMMAND is non empty
+	if [ $STATUS == 0 ] # if COMMAND is non empty
 	then
 		echo "$COUNT. $(${i} --version | head -1)"
-	else 
+	elif [ $STATUS == 1 ]
+	then 
 		echo "$COUNT. The utility \"$i\" is not installed"
+	else 
+		echo "Something went wrong"
 	fi
-	
-#	VAR="$(${i} --version)"
-#	echo $VAR
 done
 

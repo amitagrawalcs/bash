@@ -8,5 +8,3 @@ echo '<==========Responses=============>'
 
 cat access.log| awk '{print $9}'| grep -v 200|sort | uniq -c| sort -n -r
 
-#echo $LINE | awk '{print $9}'
-
